@@ -1,5 +1,6 @@
 ﻿using chemicalElement.Data.Models.ViewModels;
 using chemicalElement.DBModelUpdate;
+using chemicalElement.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,12 @@ namespace chemicalElement.Data.Services
 
         public void AddComposition(CompositionVM composition)
         {
+            if (!NumberOfAtomsGreaterOne(composition.NumberOfAtoms))
+            {
+                throw new CompositionException("El número de atomos debe ser mayor ó igual a 1", composition.NumberOfAtoms.ToString());
+            }
+            
+
             var _composition = new Composition()
             {
                 Symbol = composition.Symbol,
@@ -32,5 +39,14 @@ namespace chemicalElement.Data.Services
             _context.Compositions.Add(_composition);
             _context.SaveChanges();
         }
+
+        private bool NumberOfAtomsGreaterOne(int number)
+        {
+            if (number < 1)
+                return false;
+            else
+                return true;
+        }
+        
     }
 }

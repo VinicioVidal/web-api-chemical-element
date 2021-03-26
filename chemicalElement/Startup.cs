@@ -40,6 +40,8 @@ namespace chemicalElement
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "chemicalElement", Version = "v1" });
             });
             services.AddTransient<CompositionsService>();
+            services.AddTransient<ElementsService>();
+            services.AddTransient<ComposedsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
